@@ -1,0 +1,47 @@
+{
+  "name": "bajj.be",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next-auth/firebase-adapter": "^0.1.2",
+    "@thimar/eslint-config": "^1.0.2",
+    "axios": "^0.21.1",
+    "broadcast-channel": "^3.7.0",
+    "classnames": "^2.3.1",
+    "daisyui": "^1.14.0",
+    "firebase": "^8.7.1",
+    "next": "11.0.1",
+    "next-auth": "^4.0.0-beta.2",
+    "nodemailer": "^6.6.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-gravatar": "^2.6.3",
+    "react-image-gallery": "^1.1.1",
+    "react-notifications": "^1.7.2",
+    "react-query": "^3.18.1"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.4",
+    "@types/react": "17.0.14",
+    "@types/react-gravatar": "^2.6.10",
+    "@types/react-image-gallery": "^1.0.4",
+    "autoprefixer": "^10.3.4",
+    "eslint": "7.30.0",
+    "eslint-config-next": "11.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "postcss": "^8.3.6",
+    "prettier": "^2.3.2",
+    "tailwindcss": "^2.2.15",
+    "typescript": "4.3.5"
+  }
+}
