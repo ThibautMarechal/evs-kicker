@@ -1,10 +1,10 @@
-import * as React from 'react';
+import { ReactNode, useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 
-export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
+export const AuthGuard = ({ children }: { children: ReactNode }) => {
   const { data: session, status } = useSession();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (status !== 'loading' && !session?.user) {
       signIn();
     }

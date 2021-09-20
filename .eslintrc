@@ -1,44 +1,6 @@
 {
-  "extends": ["standard", "eslint:recommended", "prettier", "next", "next/core-web-vitals"],
-  "plugins": ["prettier"],
-  "env": {
-    "browser": true,
-    "node": true
-  },
+  "extends": ["@thimar", "next", "next/core-web-vitals"],
   "rules": {
-    "prettier/prettier": [
-      "warn",
-      {
-        "printWidth": 180,
-        "tabWidth": 2,
-        "singleQuote": true,
-        "trailingComma": "all",
-        "bracketSpacing": true,
-        "semi": true,
-        "useTabs": false,
-        "jsxBracketSameLine": false
-      }
-    ],
-    "curly": ["warn", "all"],
-    "dot-notation": ["warn"],
-    "eqeqeq": ["warn", "always"],
-    "no-div-regex": ["warn"],
-    "no-else-return": ["warn"],
-    "no-extra-label": ["warn"],
-    "no-implicit-coercion": ["warn", { "allow": ["!!"] }],
-    "no-useless-return": ["warn"],
-    "yoda": ["warn", "never", { "exceptRange": true }],
-    // Variables
-    "no-undef-init": ["warn"],
-    // ECMAScript 6
-    "no-duplicate-imports": ["warn"],
-    "no-useless-computed-key": ["warn"],
-    "no-useless-rename": ["warn"],
-    "no-var": ["warn"],
-    "object-shorthand": ["warn"],
-    "prefer-const": ["warn"],
-    "prefer-destructuring": ["warn"],
-    "prefer-spread": ["warn"],
-    "prefer-template": ["warn"]
+    "react/display-name": 0
   }
 }
