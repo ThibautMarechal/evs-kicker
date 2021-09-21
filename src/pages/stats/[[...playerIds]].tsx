@@ -4,6 +4,7 @@ import { usePlayers, usePlayersGames } from '../../react-query/players';
 import { Chart, ChartOptions } from 'react-charts';
 import { Game, Player } from '../../typing';
 import PlayerSelect from '../../components/PlayerSelect';
+import { PlayersTable } from '../../components/PlayersTable';
 
 type GamePoint = {
   date: Date;
@@ -24,39 +25,39 @@ export default function Stats() {
     if (!players) {
       return playerIds.map(() => []);
     }
-    return queries.map(({ data: games }, i) => {
-      const gamePoints: GamePoint[] = [];
-      let playerElo = players.find((p) => p.id === playerIds[i])?.elo ?? 0;
-      (games as Game[])?.forEach((game) => {
-        const gameDate = new Date(game.date);
-        gameDate.setUTCHours(0);
-        gameDate.setUTCMinutes(0);
-        gameDate.setUTCSeconds(0);
-        gameDate.setUTCMilliseconds(0);
-        if (!gamePoints.length || !sameDay(new Date(game.date), gamePoints[gamePoints.length - 1].date)) {
-          gamePoints.push({
-            date: gameDate,
-            elo: playerElo,
-          });
-        }
-        if (game.winners.includes(playerIds[i])) {
-          playerElo -= game.delta;
-        } else {
-          playerElo += game.delta;
-        }
-      });
-      return gamePoints;
-    });
+    return queries
+      .map(({ data: games }, i) => {
+        const gamePoints: GamePoint[] = [];
+        let playerElo = players.find((p) => p.id === playerIds[i])?.elo ?? 0;
+        (games as Game[])?.forEach((game) => {
+          const gameDate = new Date(game.date);
+          gameDate.setUTCHours(0);
+          gameDate.setUTCMinutes(0);
+          gameDate.setUTCSeconds(0);
+          gameDate.setUTCMilliseconds(0);
+          if (!gamePoints.length || !sameDay(new Date(game.date), gamePoints[gamePoints.length - 1].date)) {
+            gamePoints.push({
+              date: gameDate,
+              elo: playerElo,
+            });
+          }
+          if (game.winners.includes(playerIds[i])) {
+            playerElo -= game.delta;
+          } else {
+            playerElo += game.delta;
+          }
+        });
+        return gamePoints;
+      })
+      .filter((gps) => gps.length);
   }, [playerIds, players, queries]);
 
   const options = useMemo<ChartOptions<GamePoint>>(
     () => ({
-      data: gamePointsSeries
-        .map((gps, i) => ({
-          label: players?.find((p) => p.id === playerIds[i])?.username,
-          data: gps,
-        }))
-        .filter((gps) => gps.data.length),
+      data: gamePointsSeries.map((gps, i) => ({
+        label: players?.find((p) => p.id === playerIds[i])?.username,
+        data: gps,
+      })),
       primaryAxis: {
         scaleType: 'time',
         getValue: (g) => g.date,
@@ -80,8 +81,15 @@ export default function Stats() {
           value={(playerIds.map((id) => players?.find((p) => p.id === id))?.filter(Boolean) ?? []) as Player[]}
           onChange={(newPlayers) => (newPlayers ? push(`/stats/${newPlayers.map((p) => p.id).join('/')}`) : push('/stats/'))}
         />
+        {playerIds.length ? (
+          <div className="my-4">
+            <PlayersTable players={players?.filter((p) => playerIds.includes(p.id)) ?? []} />
+          </div>
+        ) : null}
       </div>
-      <div className="col-span-2">{players && playerIds.length && queries.some((q) => q.data) ? <Chart options={options} /> : null}</div>
+      <div className="col-span-2">
+        {players && playerIds.length && queries.some((q) => q.data) ? <>{gamePointsSeries.length ? <Chart options={options} /> : <p>No match found</p>}</> : null}
+      </div>
     </div>
   );
 }
