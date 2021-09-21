@@ -8,9 +8,9 @@ export default function Home() {
   const { data: games } = useGames();
   const { data: players } = usePlayers();
   return (
-    <div className="grid grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
       <GameForm />
-      <div className="col-span-2">
+      <div className="md:col-span-2">
         <GamesTable games={games ?? []} canDelete />
       </div>
       <div>
