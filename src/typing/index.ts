@@ -5,6 +5,8 @@ export type Player = {
   elo: number;
 };
 
+export type PlayerIn = Pick<Player, 'username' | 'email'>;
+
 export type Game = {
   id: string;
   players: string[];
@@ -14,4 +16,4 @@ export type Game = {
   delta: number;
 };
 
-export type GameIn = Pick<Game, 'winners' | 'loosers'>
+export type GameIn = Pick<Game, 'winners' | 'loosers'>;

@@ -11,7 +11,7 @@ type GamePoint = {
 };
 
 function sameDay(d1: Date, d2: Date) {
-  return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+  return d1.getUTCFullYear() === d2.getUTCFullYear() && d1.getUTCMonth() === d2.getUTCMonth() && d1.getUTCDate() === d2.getUTCDate();
 }
 
 export default function Stats() {
@@ -20,7 +20,7 @@ export default function Stats() {
   const { data: players } = usePlayers();
   const queries = usePlayersGames(playerIds);
 
-  const gamePoints = useMemo<GamePoint[][]>(() => {
+  const gamePointsSeries = useMemo<GamePoint[][]>(() => {
     if (!players) {
       return playerIds.map(() => []);
     }
@@ -48,14 +48,15 @@ export default function Stats() {
       return gamePoints;
     });
   }, [playerIds, players, queries]);
-  console.log(gamePoints);
 
   const options = useMemo<ChartOptions<GamePoint>>(
     () => ({
-      data: gamePoints.map((gp, i) => ({
-        label: players?.find((p) => p.id === playerIds[i])?.username,
-        data: gp,
-      })),
+      data: gamePointsSeries
+        .map((gps, i) => ({
+          label: players?.find((p) => p.id === playerIds[i])?.username,
+          data: gps,
+        }))
+        .filter((gps) => gps.data.length),
       primaryAxis: {
         scaleType: 'time',
         getValue: (g) => g.date,
@@ -69,11 +70,11 @@ export default function Stats() {
         },
       ],
     }),
-    [gamePoints, playerIds, players],
+    [gamePointsSeries, playerIds, players],
   );
 
   return (
-    <div className="grid grid-cols-3 gap-4 p-4 h-screen">
+    <div className="grid grid-cols-3 gap-4 p-4 h-full">
       <div>
         <PlayerSelect
           value={(playerIds.map((id) => players?.find((p) => p.id === id))?.filter(Boolean) ?? []) as Player[]}

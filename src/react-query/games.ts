@@ -19,6 +19,10 @@ export const useGameDeletion = (mutationOptions?: UseMutationOptions<AxiosRespon
       console.error('Failed to delete game', error);
       mutationOptions?.onError?.(error, variables, context);
     },
+    onSuccess: (response, variables, context) => {
+      queryClient.setQueryData(['games'], (games?: Game[]) => games?.filter((g) => g.id !== variables) ?? []);
+      mutationOptions?.onSuccess?.(response, variables, context);
+    },
     onSettled: (response, error, variables, context) => {
       queryClient.invalidateQueries(['games']);
       queryClient.invalidateQueries(['players']);

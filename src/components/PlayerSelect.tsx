@@ -19,7 +19,6 @@ const selectStyle: ComponentProps<typeof Select>['styles'] = {
   control: (provided) => ({
     ...provided,
     border: 0,
-    height: 30,
     backgroundColor: 'hsla(var(--b2))',
   }),
   multiValue: (provided) => ({

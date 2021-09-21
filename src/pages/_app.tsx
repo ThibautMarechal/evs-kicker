@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import '../styles/index.css';
 import 'tailwindcss/tailwind.css';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
@@ -15,7 +17,31 @@ export const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppPr
           <title>EVS Kicker</title>
         </Head>
         <AuthGuard>
-          <Component {...pageProps} />
+          <div className="h-full flex flex-col">
+            <div className="flex-none navbar m-4 mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+              <div className="flex-1 px-2 mx-2">
+                <Link href="/">
+                  <a className="text-lg font-bold">EVS Kicker</a>
+                </Link>
+              </div>
+              <div className="flex-none hidden px-2 mx-2 lg:flex">
+                <div className="flex items-stretch">
+                  <Link href="/">
+                    <a className="btn btn-ghost btn-sm rounded-btn">Home</a>
+                  </Link>
+                  <Link href="/stats/">
+                    <a className="btn btn-ghost btn-sm rounded-btn">Stats</a>
+                  </Link>
+                  <Link href="/players/">
+                    <a className="btn btn-ghost btn-sm rounded-btn">Players</a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="flex-grow">
+              <Component {...pageProps} />
+            </div>
+          </div>
         </AuthGuard>
       </SessionProvider>
     </QueryClientProvider>

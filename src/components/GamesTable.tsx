@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const GamesTable = ({ games = [], canDelete = false }: Props) => {
-  const { mutate: deleteGame } = useGameDeletion();
+  const { mutate: deleteGame, isLoading: isDeleting } = useGameDeletion();
   const columns = useMemo<Column<Game>[]>(
     () => [
       {
@@ -25,7 +25,9 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         Cell: ({ value }) => (
           <>
             {value.map((playerId) => (
-              <PlayerPreview id={playerId} key={playerId} />
+              <span className="mx-2">
+                <PlayerPreview id={playerId} key={playerId} />
+              </span>
             ))}
           </>
         ),
@@ -36,7 +38,9 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         Cell: ({ value }) => (
           <>
             {value.map((playerId) => (
-              <PlayerPreview id={playerId} key={playerId} />
+              <span className="mx-2">
+                <PlayerPreview id={playerId} key={playerId} />
+              </span>
             ))}
           </>
         ),
@@ -50,16 +54,22 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         accessor: 'id',
         Cell: ({ value: gameId, row }) =>
           canDelete && row.index === 0 ? (
-            <button className="btn btn-square btn-sm" type="button" onClick={() => deleteGame(gameId)}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            <>
+              {isDeleting ? (
+                <button disabled className="btn btn-sm btn-square loading" />
+              ) : (
+                <button className="btn btn-square btn-sm" type="button" onClick={() => deleteGame(gameId)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </>
           ) : null,
         width: 50,
       },
     ],
-    [canDelete, deleteGame],
+    [canDelete, deleteGame, isDeleting],
   );
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,

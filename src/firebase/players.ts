@@ -1,6 +1,6 @@
 import { getDoc, getDocs, query, collection, orderBy, doc, addDoc, updateDoc } from '@firebase/firestore';
 import { firestore } from '.';
-import { Player } from '../typing';
+import { Player, PlayerIn } from '../typing';
 
 const playersCollection = collection(firestore, process.env.NODE_ENV === 'development' ? 'players' : 'players');
 
@@ -24,11 +24,11 @@ export async function getPlayer(id: string): Promise<Player> {
   };
 }
 
-export async function createPlayer(player: Omit<Player, 'id'>): Promise<void> {
+export async function createPlayer(player: PlayerIn): Promise<void> {
   await addDoc(playersCollection, {
     username: player.username,
     email: player.email,
-    elo: 1200,
+    elo: 1000,
   });
 }
 
