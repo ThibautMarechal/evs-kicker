@@ -61,7 +61,7 @@ export async function createGame(game: GameIn): Promise<void> {
   const winnerAverage = winnerPlayers.reduce((acc, winner) => acc + winner.elo, 0) / winnerPlayers.length;
   const looserAverage = looserPlayers.reduce((acc, looser) => acc + looser.elo, 0) / looserPlayers.length;
 
-  const { playerRating } = EloRating.calculate(winnerAverage, looserAverage, true, 40);
+  const { playerRating } = EloRating.calculate(winnerAverage, looserAverage, true);
 
   const delta = playerRating - winnerAverage;
 
