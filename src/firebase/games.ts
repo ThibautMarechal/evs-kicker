@@ -48,6 +48,17 @@ export async function deleteGame(id: string): Promise<void> {
 }
 
 export async function createGame(game: GameIn): Promise<void> {
+  if (!game.loosers.length || !game.winners.length) {
+    throw new Error('422');
+  }
+  for (const winner of game.winners) {
+    for (const looser of game.loosers) {
+      if (winner === looser) {
+        throw new Error('422');
+      }
+    }
+  }
+
   const winnerPlayers: Player[] = [];
   for (const winner of game.winners) {
     winnerPlayers.push(await getPlayer(winner));
