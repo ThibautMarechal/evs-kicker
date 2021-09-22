@@ -21,6 +21,9 @@ function sameDay(d1: Date, d2: Date) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if(context.req.url?.startsWith('/_next/data')){
+    return { props: {}}
+  }
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['players'], getPlayers);
   const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
