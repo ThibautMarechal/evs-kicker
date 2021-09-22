@@ -25,8 +25,8 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         Cell: ({ value }) => (
           <>
             {value.map((playerId) => (
-              <span className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
-                <PlayerPreview id={playerId} key={playerId} />
+              <span key={playerId} className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
+                <PlayerPreview id={playerId} />
               </span>
             ))}
           </>
@@ -38,8 +38,8 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         Cell: ({ value }) => (
           <>
             {value.map((playerId) => (
-              <span className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
-                <PlayerPreview id={playerId} key={playerId} />
+              <span key={playerId} className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
+                <PlayerPreview id={playerId} />
               </span>
             ))}
           </>
