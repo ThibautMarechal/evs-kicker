@@ -3,3 +3,6 @@ body,
 #__next{
   height: 100%
 }
+.table.table th:first-child{
+  position: relative;
+}

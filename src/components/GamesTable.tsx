@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { useMemo } from 'react';
+import cn from 'classnames';
 import { Column, useTable } from 'react-table';
 import { Game } from '../typing';
 import { PlayerPreview } from '../components/PlayerPreview';
@@ -15,7 +16,6 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
   const columns = useMemo<Column<Game>[]>(
     () => [
       {
-        Header: 'Date',
         accessor: 'date',
         Cell: ({ value }) => Intl.DateTimeFormat([], { dateStyle: 'medium' }).format(new Date(value)),
       },
@@ -25,7 +25,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         Cell: ({ value }) => (
           <>
             {value.map((playerId) => (
-              <span className="mx-2">
+              <span className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
                 <PlayerPreview id={playerId} key={playerId} />
               </span>
             ))}
@@ -38,7 +38,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         Cell: ({ value }) => (
           <>
             {value.map((playerId) => (
-              <span className="mx-2">
+              <span className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
                 <PlayerPreview id={playerId} key={playerId} />
               </span>
             ))}
@@ -54,17 +54,13 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         accessor: 'id',
         Cell: ({ value: gameId, row }) =>
           canDelete && row.index === 0 ? (
-            <>
-              {isDeleting ? (
-                <button disabled className="btn btn-sm btn-square loading" />
-              ) : (
-                <button className="btn btn-square btn-sm" type="button" onClick={() => deleteGame(gameId)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              )}
-            </>
+            <button className={cn('btn btn-square btn-xs', { loading: isDeleting })} disabled={isDeleting} type="button" onClick={() => deleteGame(gameId)}>
+              {!isDeleting ? (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : null}
+            </button>
           ) : null,
         width: 50,
       },
@@ -73,7 +69,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
   );
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data: games ?? [],
+    data: games?.slice(0, 2) ?? [],
   });
   return (
     <>
@@ -82,8 +78,10 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                {headerGroup.headers.map((column, i) => (
+                  <th {...column.getHeaderProps()} className={cn({ 'bg-opacity-0': i === 0 })}>
+                    {column.render('Header')}
+                  </th>
                 ))}
               </tr>
             ))}

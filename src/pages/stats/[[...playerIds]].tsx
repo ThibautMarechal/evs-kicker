@@ -75,7 +75,7 @@ export default function Stats() {
   );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 h-full">
+    <div className="md:grid md:grid-cols-3 md:gap-4 p-4 h-full flex flex-col">
       <div>
         <PlayerSelect
           value={(playerIds.map((id) => players?.find((p) => p.id === id))?.filter(Boolean) ?? []) as Player[]}
@@ -87,7 +87,7 @@ export default function Stats() {
           </div>
         ) : null}
       </div>
-      <div className="col-span-2">
+      <div className="md:col-span-2 h-full">
         {players && playerIds.length && queries.some((q) => q.data) ? <>{gamePointsSeries.length ? <Chart options={options} /> : <p>No match found</p>}</> : null}
       </div>
     </div>

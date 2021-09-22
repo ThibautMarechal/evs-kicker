@@ -13,7 +13,7 @@ export const PlayerPreview = ({ id, player: initialPlayer }: Props) => {
   return player ? (
     <div className="inline-flex items-center space-x-3">
       <div className="avatar">
-        <div className="w-8 h-8 mask mask-squircle">
+        <div className="w-4 md:w-6 h-4 md:h-6 mask mask-squircle">
           <Gravatar email={player?.email} />
         </div>
       </div>
