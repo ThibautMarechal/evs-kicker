@@ -90,7 +90,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
             {rows?.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr {...row.getRowProps()} className="h-12">
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   ))}
