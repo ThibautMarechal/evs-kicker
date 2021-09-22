@@ -9,7 +9,6 @@ import { QueryClientProvider } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
 import { queryClient } from '../react-query/queryClient';
 import { AuthGuard } from '../components/AuthGuard';
-import { GetServerSidePropsContext } from 'next';
 
 
 export const MyApp = ({ Component, pageProps: { session, dehydratedState, ...pageProps } }: AppProps) => {

@@ -1,4 +1,3 @@
-import { GetServerSidePropsContext } from 'next';
 import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import { GameForm } from '../components/GameForm';
