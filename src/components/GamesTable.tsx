@@ -69,7 +69,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
   );
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data: games?.slice(0, 2) ?? [],
+    data: games ?? [],
   });
   return (
     <>
