@@ -1,15 +1,13 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import App, { AppContext } from 'next/app'
+import App, { AppContext, AppProps } from 'next/app';
 import '../styles/index.css';
 import 'tailwindcss/tailwind.css';
-import type { AppProps } from 'next/app';
 import { getSession, SessionProvider } from 'next-auth/react';
 import { QueryClientProvider } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
 import { queryClient } from '../react-query/queryClient';
 import { AuthGuard } from '../components/AuthGuard';
-
 
 export const MyApp = ({ Component, pageProps: { session, dehydratedState, ...pageProps } }: AppProps) => {
   return (
@@ -53,14 +51,13 @@ export const MyApp = ({ Component, pageProps: { session, dehydratedState, ...pag
 MyApp.getInitialProps = async (context: AppContext) => {
   const appProps = await App.getInitialProps(context);
   const session = await getSession(context.ctx);
-  return { 
+  return {
     ...appProps,
-    pageProps: { 
+    pageProps: {
       ...appProps.pageProps,
-      session
-    }
+      session,
+    },
   };
-}
-
+};
 
 export default MyApp;

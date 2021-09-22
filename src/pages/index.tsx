@@ -10,18 +10,18 @@ import { usePlayers } from '../react-query/players';
 import { Player } from '../typing';
 
 export async function getServerSideProps() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['games'], getGames);
   await queryClient.prefetchQuery(['players'], getPlayers);
   const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
-  players.forEach(player => {
+  players.forEach((player) => {
     queryClient.setQueryData(['players', player.id], player);
   });
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-    }, 
-  }
+    },
+  };
 }
 
 export default function Home() {

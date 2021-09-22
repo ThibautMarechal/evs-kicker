@@ -21,28 +21,26 @@ function sameDay(d1: Date, d2: Date) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['players'], getPlayers);
   const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
-  players.forEach(player => {
+  players.forEach((player) => {
     queryClient.setQueryData(['players', player.id], player);
   });
-  const playerIds = context.query.playerIds as string[] ?? [];
-  await Promise.allSettled(playerIds.map(playerId => getPlayerGames(playerId))).then(playersGamesResults => {
+  const playerIds = (context.query.playerIds as string[]) ?? [];
+  await Promise.allSettled(playerIds.map((playerId) => getPlayerGames(playerId))).then((playersGamesResults) => {
     playersGamesResults.forEach((playersGamesResult, index) => {
-      if(playersGamesResult.status === "fulfilled"){
+      if (playersGamesResult.status === 'fulfilled') {
         queryClient.setQueryData(['players', playerIds[index], 'games'], playersGamesResult.value);
       }
-    })
+    });
   });
-  const playersGames = getPlayerGames 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-    }, 
-  }
+    },
+  };
 }
-
 
 export default function Stats() {
   const { query, push } = useRouter();
@@ -76,13 +74,13 @@ export default function Stats() {
             playerElo += game.delta;
           }
         });
-        if(gamePoints.length){
+        if (gamePoints.length) {
           const theDateBeforeTheFirstMatch = new Date(gamePoints[0].date);
-          theDateBeforeTheFirstMatch.setDate(theDateBeforeTheFirstMatch.getDate() -1 )
+          theDateBeforeTheFirstMatch.setDate(theDateBeforeTheFirstMatch.getDate() - 1);
           gamePoints.unshift({
             date: theDateBeforeTheFirstMatch,
-            elo: Number.parseInt(process.env.NEXT_PUBLIC_INITIAL_ELO as string, 10)
-          })
+            elo: Number.parseInt(process.env.NEXT_PUBLIC_INITIAL_ELO as string, 10),
+          });
         }
         return gamePoints;
       })

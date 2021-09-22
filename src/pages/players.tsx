@@ -7,19 +7,18 @@ import { getPlayers } from '../firebase/players';
 import { Player } from '../typing';
 import { dehydrate } from 'react-query/hydration';
 
-
 export async function getServerSideProps() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['players'], getPlayers);
   const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
-  players.forEach(player => {
+  players.forEach((player) => {
     queryClient.setQueryData(['players', player.id], player);
   });
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-    }, 
-  }
+    },
+  };
 }
 
 export default function Home() {
