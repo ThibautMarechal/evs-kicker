@@ -7,7 +7,7 @@ const provider = CredentialsProvider({
     password: { label: 'Password', type: 'password' },
   },
   authorize: (credentials) => {
-    if (credentials.password === 'kicker') {
+    if (credentials.password === process.env.PASSWORD) {
       return {
         id: 'kicker-user',
       };
