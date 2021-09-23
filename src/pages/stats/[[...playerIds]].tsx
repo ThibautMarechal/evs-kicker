@@ -5,6 +5,11 @@ import { Chart, ChartOptions } from 'react-charts';
 import { Game, Player } from '../../typing';
 import PlayerSelect from '../../components/PlayerSelect';
 import { PlayersTable } from '../../components/PlayersTable';
+import { QueryClient } from 'react-query';
+import { GetServerSidePropsContext } from 'next';
+import { getPlayers } from '../../firebase/players';
+import { dehydrate } from 'react-query/hydration';
+import { getPlayerGames } from '../../firebase/games';
 
 type GamePoint = {
   date: Date;
@@ -13,6 +18,31 @@ type GamePoint = {
 
 function sameDay(d1: Date, d2: Date) {
   return d1.getUTCFullYear() === d2.getUTCFullYear() && d1.getUTCMonth() === d2.getUTCMonth() && d1.getUTCDate() === d2.getUTCDate();
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (context.req.url?.startsWith('/_next/data')) {
+    return { props: {} };
+  }
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(['players'], getPlayers);
+  const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
+  players.forEach((player) => {
+    queryClient.setQueryData(['players', player.id], player);
+  });
+  const playerIds = (context.query.playerIds as string[]) ?? [];
+  await Promise.allSettled(playerIds.map((playerId) => getPlayerGames(playerId))).then((playersGamesResults) => {
+    playersGamesResults.forEach((playersGamesResult, index) => {
+      if (playersGamesResult.status === 'fulfilled') {
+        queryClient.setQueryData(['players', playerIds[index], 'games'], playersGamesResult.value);
+      }
+    });
+  });
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 }
 
 export default function Stats() {
@@ -47,6 +77,14 @@ export default function Stats() {
             playerElo += game.delta;
           }
         });
+        if (gamePoints.length) {
+          const theDateBeforeTheFirstMatch = new Date(gamePoints[0].date);
+          theDateBeforeTheFirstMatch.setDate(theDateBeforeTheFirstMatch.getDate() - 1);
+          gamePoints.unshift({
+            date: theDateBeforeTheFirstMatch,
+            elo: Number.parseInt(process.env.NEXT_PUBLIC_INITIAL_ELO as string, 10),
+          });
+        }
         return gamePoints;
       })
       .filter((gps) => gps.length);

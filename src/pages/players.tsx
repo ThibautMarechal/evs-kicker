@@ -2,6 +2,24 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { PlayersTable } from '../components/PlayersTable';
 import { usePlayerCreation, usePlayers } from '../react-query/players';
+import { QueryClient } from 'react-query';
+import { getPlayers } from '../firebase/players';
+import { Player } from '../typing';
+import { dehydrate } from 'react-query/hydration';
+
+export async function getServerSideProps() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(['players'], getPlayers);
+  const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
+  players.forEach((player) => {
+    queryClient.setQueryData(['players', player.id], player);
+  });
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+}
 
 export default function Home() {
   const { data: players } = usePlayers();
