@@ -28,7 +28,7 @@
     "@thimar/eslint-config": "^1.0.2",
     "@types/react": "^17.0.24",
     "@types/react-gravatar": "^2.6.10",
-    "@types/react-select": "^4.0.17",
+    "@types/react-select": "4.0.18",
     "@types/react-table": "^7.7.4",
     "autoprefixer": "^10.3.5",
     "eslint": "^7.32.0",
