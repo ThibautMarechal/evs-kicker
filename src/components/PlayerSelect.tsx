@@ -47,16 +47,18 @@ type Props = {
 
 export const PlayerSelect = ({ value, onChange, filterOption = () => true, placeholder = 'Players' }: Props) => {
   const { data: players } = usePlayers();
+  const options = players?.filter(filterOption) ?? [];
   return (
     <Select
       value={value}
       // @ts-ignore
       onChange={onChange}
-      options={players?.filter(filterOption)}
-      getOptionValue={(o) => o.id}
-      getOptionLabel={(o) => o.username}
+      options={options}
+      getOptionValue={(o: Player) => o.id}
+      getOptionLabel={(o: Player) => o.username}
       isMulti
       placeholder={placeholder}
+      // @ts-ignore
       styles={selectStyle}
     />
   );
