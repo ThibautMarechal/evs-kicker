@@ -871,10 +871,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-table@7.7.4":
-  version "7.7.4"
-  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.7.4.tgz#7d01b3a9516e8dcb7152858271210ef08c6cc32a"
-  integrity sha512-CIBJJx9iid8k+kN1/WD8vSXnM1Qc6zX3ihrMnt3ilZxLSrFJSw4wc1u9WeT4dWjbECEO1wJBGVHfSknR4nzFiQ==
+"@types/react-table@7.7.5":
+  version "7.7.5"
+  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.7.5.tgz#34603de1f4e745d8eacdb289b90b6853d97f4e6d"
+  integrity sha512-a6KLDyT6ZXxewYTG9sOsB9heoBVTYYwfoyB7+sziNGECOJXqmavdWeRtp548pJl490XHmUSxaWnVeeT9UOW9Gg==
   dependencies:
     "@types/react" "*"
 
@@ -4015,7 +4015,7 @@ nanocolors@^0.1.5:
   resolved "https://registry.yarnpkg.com/nanocolors/-/nanocolors-0.1.6.tgz#bc2350d3edfdbfadd7ac018c855ae7c13905a6ad"
   integrity sha512-2pvTw6vYRaBLGir2xR7MxaJtyWkrn+C53EpW8yPotG+pdAwBvt0Xwk4VJ6VHLY0aLthVZPvDfm9TdZvrvAm5UQ==
 
-nanocolors@^0.2.8:
+nanocolors@^0.2.2, nanocolors@^0.2.8:
   version "0.2.11"
   resolved "https://registry.yarnpkg.com/nanocolors/-/nanocolors-0.2.11.tgz#f2573e6872f1b70067423fc68bbc9d0de2f3bbee"
   integrity sha512-83ttyvfJj66dKMadWfBkEUOEDFfRc8FpzTJvh1MySR/pzWFmFikTQZGOV6kHZRz7yR/heiQ1y/MHBBN5P/e7WQ==
@@ -4618,7 +4618,16 @@ postcss@8.2.15:
     nanoid "^3.1.23"
     source-map "^0.6.1"
 
-postcss@8.3.7, postcss@^8.1.6, postcss@^8.2.1:
+postcss@8.3.8:
+  version "8.3.8"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.8.tgz#9ebe2a127396b4b4570ae9f7770e7fb83db2bac1"
+  integrity sha512-GT5bTjjZnwDifajzczOC+r3FI3Cu+PgPvrsjhQdRqa2kTJ4968/X9CUce9xttIB0xOs5c6xf0TCWZo/y9lF6bA==
+  dependencies:
+    nanocolors "^0.2.2"
+    nanoid "^3.1.25"
+    source-map-js "^0.6.2"
+
+postcss@^8.1.6, postcss@^8.2.1:
   version "8.3.7"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.7.tgz#ec88563588c8da8e58e7226f7633b51ae221eeda"
   integrity sha512-9SaY7nnyQ63/WittqZYAvkkYPyKxchMKH71UDzeTmWuLSvxTRpeEeABZAzlCi55cuGcoFyoV/amX2BdsafQidQ==
