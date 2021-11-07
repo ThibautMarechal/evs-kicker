@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "0.24.0",
     "classnames": "2.3.1",
-    "daisyui": "1.16.1",
+    "daisyui": "1.16.2",
     "elo-rating": "1.0.1",
     "firebase": "9.3.0",
     "next": "12.0.2",
