@@ -4,7 +4,11 @@ import { Api } from '../axios';
 import { Game, GameIn } from '../typing';
 
 export const useGames = (queryOptions?: UseQueryOptions<Game[]>) => {
-  return useQuery(['games'], () => Api.get<Game[]>('/api/games').then((r) => r.data), queryOptions);
+  return useQuery({
+    queryKey: ['games'],
+    queryFn: () => Api.get<Game[]>('/api/games').then((r) => r.data),
+    ...queryOptions,
+  });
 };
 
 export const useGameDeletion = (mutationOptions?: UseMutationOptions<AxiosResponse<void>, unknown, string>) => {
