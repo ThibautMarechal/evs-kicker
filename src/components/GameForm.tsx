@@ -7,15 +7,15 @@ import PlayerSelect from './PlayerSelect';
 export const GameForm = () => {
   const { mutate: createGame, isLoading: isCreating } = useGameCreation({
     onSuccess: () => {
-      setWinners([])
+      setWinners([]);
       setLoosers([]);
     },
   });
-  const [winners, setWinners] = useState< Player[]>([]);
+  const [winners, setWinners] = useState<Player[]>([]);
   const [loosers, setLoosers] = useState<Player[]>([]);
   return (
     <>
-        <PlayerSelect value={winners} onChange={(v) => setWinners(v as Player[])} filterOption={(p) => !loosers.includes(p)} placeholder="Winners" />
+      <PlayerSelect value={winners} onChange={(v) => setWinners(v as Player[])} filterOption={(p) => !loosers.includes(p)} placeholder="Winners" />
       <PlayerSelect value={loosers} onChange={(v) => setLoosers(v as Player[])} filterOption={(p) => !winners.includes(p)} placeholder="Loosers" />
       <button
         disabled={!winners.length || !loosers.length || isCreating}
