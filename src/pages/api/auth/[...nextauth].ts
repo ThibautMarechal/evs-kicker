@@ -7,7 +7,7 @@ const provider = CredentialsProvider({
     password: { label: 'Password', type: 'password' },
   },
   authorize: (credentials) => {
-    if (credentials.password === process.env.PASSWORD) {
+    if (credentials?.password === process.env.PASSWORD) {
       return {
         id: 'kicker-user',
       };
@@ -19,6 +19,7 @@ const provider = CredentialsProvider({
 export default NextAuth({
   providers: [provider as CredentialsConfig<any>],
   jwt: {
-    secret: 'MY OBVIOUS SECRET',
+    secret: process.env.JWT_SECRET,
   },
+  secret: process.env.JWT_SECRET,
 });
