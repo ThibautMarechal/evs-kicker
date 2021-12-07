@@ -29,7 +29,7 @@
     "@thimar/eslint-config": "1.0.2",
     "@types/react": "17.0.37",
     "@types/react-gravatar": "2.6.10",
-    "@types/react-table": "7.7.8",
+    "@types/react-table": "7.7.9",
     "autoprefixer": "10.4.0",
     "eslint-config-next": "12.0.7",
     "eslint-config-prettier": "8.3.0",
