@@ -79,7 +79,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column, i) => (
-                  <th {...column.getHeaderProps()} className={cn({ 'bg-opacity-0': i === 0 })}>
+                  <th {...column.getHeaderProps()}>
                     {column.render('Header')}
                   </th>
                 ))}
