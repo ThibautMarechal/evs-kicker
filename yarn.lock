@@ -2653,10 +2653,10 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-react-charts@3.0.0-beta.34:
-  version "3.0.0-beta.34"
-  resolved "https://registry.yarnpkg.com/react-charts/-/react-charts-3.0.0-beta.34.tgz#810c819cde78fe7b980393a264607a782382fd44"
-  integrity sha512-ciyXi7/BFKBkTsZn25k9VJ3QMDa5eBlE0rhOeCFOAV6IPTCEM7m6+0NrKtS3IYgGaKQgnQu74mubGUmEhwuatw==
+react-charts@3.0.0-beta.35:
+  version "3.0.0-beta.35"
+  resolved "https://registry.yarnpkg.com/react-charts/-/react-charts-3.0.0-beta.35.tgz#e2282402737bd4b0013332684143bdabd246e835"
+  integrity sha512-8Vr2cKva5NZjARdI8nLki4IdneBVV1V15TCpfXB2w7t1Tl0lEWsSIToRG3UAneVQSmkk2Q4l5tw65ZjgyPYCpw==
   dependencies:
     "@babel/runtime" "^7.14.6"
     "@reach/observe-rect" "^1.2.0"
