@@ -644,12 +644,12 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.0.tgz#7f698254aadf921e48dda8c0a6b304026b8a9323"
   integrity sha512-JLo+Y592QzIE+q7Dl2pMUtt4q8SKYI5jDrZxrozEQxnGVOyYE+GWK9eLkwTaeN9DDctlaRAQ3TBmzZ1qdLE30A==
 
-"@thimar/eslint-config@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@thimar/eslint-config/-/eslint-config-1.2.0.tgz#16cb0899be3a98519ca7ed3ec93515ce41521977"
-  integrity sha512-x/amo8QqDHj3nYy4QY/VcX8cbKLjrwmzFcqlifOG/PoRO7SbP6tw8G/Q/e+h6OUEg8LNzHz3v7eh86evkfOy3g==
+"@thimar/eslint-config@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@thimar/eslint-config/-/eslint-config-1.2.1.tgz#d9507dc05f44b5f3f472e735e80b4b94a19bc3b5"
+  integrity sha512-RTwwRCN32zDI5e2DlU8EoSgxqG+e7Y5yZ3RAzOB1SqHphrc837dxP6W9c6FRd1L/2TiaJPb5La7n7mDNxVVOjg==
   dependencies:
-    "@thimar/prettier-config" "^1.2.0"
+    "@thimar/prettier-config" "^1.2.1"
     eslint-config-prettier "^8.3.0"
     eslint-config-standard "^16.0.3"
     eslint-plugin-import "^2.25.3"
@@ -658,10 +658,10 @@
     eslint-plugin-promise "^6.0.0"
     prettier "^2.5.1"
 
-"@thimar/prettier-config@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@thimar/prettier-config/-/prettier-config-1.2.0.tgz#c50747bf412d3a2eb0b2e6225e49199b23aa7a82"
-  integrity sha512-WxgfNxge2XMxnCfGuuyG/d+QnsRjN+/lBeavB+Cu63b4/L6reE4zeLw8ZBqPYhc0oHU0pXS5/m8Guh0gey4lBA==
+"@thimar/prettier-config@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@thimar/prettier-config/-/prettier-config-1.2.1.tgz#b96303153a60dc0459635282c9ec08d6abddf44a"
+  integrity sha512-xHuvD/VH+Y2HJ0kxNe7gppghkFJ8EnXtnmkGydlqlxsZskgv9P1d7cGZBOyJszP4YBs/x7cPKqgIohKiU6ztcA==
 
 "@types/d3-array@^3.0.1":
   version "3.0.1"
