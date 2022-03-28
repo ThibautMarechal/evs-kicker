@@ -18,7 +18,7 @@
     "next": "12.0.10",
     "next-auth": "4.2.1",
     "react": "18.0.0-rc.3-next-de516ca5a-20220321",
-    "react-charts": "3.0.0-beta.35",
+    "react-charts": "3.0.0-beta.36",
     "react-dom": "18.0.0-rc.3-next-de516ca5a-20220321",
     "react-gravatar": "2.6.3",
     "react-query": "3.34.19",
