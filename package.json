@@ -31,7 +31,7 @@
     "@types/react-gravatar": "2.6.10",
     "@types/react-table": "7.7.10",
     "autoprefixer": "10.4.4",
-    "eslint-config-next": "12.1.2",
+    "eslint-config-next": "12.1.4",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-node": "11.1.0",
