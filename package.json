@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@thimar/eslint-config": "1.2.1",
-    "@types/react": "17.0.43",
+    "@types/react": "17.0.52",
     "@types/react-gravatar": "2.6.10",
     "@types/react-table": "7.7.10",
     "autoprefixer": "10.4.4",
