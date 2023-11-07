@@ -733,10 +733,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-gravatar@2.6.10":
-  version "2.6.10"
-  resolved "https://registry.yarnpkg.com/@types/react-gravatar/-/react-gravatar-2.6.10.tgz#785dab6ce7dcbcb05491b1a21304175ac0ab5b78"
-  integrity sha512-gaeLRSidYehKtS2H43b5lZcXrGkDCRiIMUa/PGU+SEpa6TlY7FbhGcldi+k+mqK7yOD4ed848Z8dHrZd/oUf0Q==
+"@types/react-gravatar@2.6.13":
+  version "2.6.13"
+  resolved "https://registry.yarnpkg.com/@types/react-gravatar/-/react-gravatar-2.6.13.tgz#0964c41852ab0362f221aecdeb4597eb0614e07a"
+  integrity sha512-Ku0QFrzuCayeo75XIHKok3m6/FRwM76OcC5orOXuLHof5Otxor12mZ4Xj1+utyi4k8n6LtH0+0VbKUwRIxmpmw==
   dependencies:
     "@types/react" "*"
 
