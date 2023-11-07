@@ -23,13 +23,13 @@
     "react-gravatar": "2.6.3",
     "react-query": "3.34.19",
     "react-select": "5.2.2",
-    "react-table": "7.7.0"
+    "react-table": "7.8.0"
   },
   "devDependencies": {
     "@thimar/eslint-config": "1.2.1",
     "@types/react": "17.0.43",
     "@types/react-gravatar": "2.6.10",
-    "@types/react-table": "7.7.10",
+    "@types/react-table": "7.7.18",
     "autoprefixer": "10.4.4",
     "eslint-config-next": "12.1.4",
     "eslint-config-prettier": "8.5.0",
