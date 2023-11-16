@@ -5,10 +5,9 @@ import { Chart, ChartOptions } from 'react-charts';
 import { Game, Player } from '../../typing';
 import PlayerSelect from '../../components/PlayerSelect';
 import { PlayersTable } from '../../components/PlayersTable';
-import { QueryClient } from 'react-query';
+import { QueryClient,dehydrate } from '@tanstack/react-query';
 import { GetServerSidePropsContext } from 'next';
 import { getPlayers } from '../../firebase/players';
-import { dehydrate } from 'react-query/hydration';
 import { getPlayerGames } from '../../firebase/games';
 
 type GamePoint = {
@@ -25,7 +24,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { props: {} };
   }
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['players'], getPlayers);
+  await queryClient.prefetchQuery({ queryKey:['players'],queryFn: getPlayers});
   const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
   players.forEach((player) => {
     queryClient.setQueryData(['players', player.id], player);

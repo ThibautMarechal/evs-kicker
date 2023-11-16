@@ -1,10 +1,12 @@
-/* eslint-disable react/jsx-key */
 import { useMemo } from 'react';
 import cn from 'classnames';
 import { Column, useTable } from 'react-table';
 import { Game } from '../typing';
 import { PlayerPreview } from '../components/PlayerPreview';
 import { useGameDeletion } from '../react-query/games';
+import dynamic from 'next/dynamic';
+
+const DateRenderer = dynamic(() => import('./DateRenderer'), { ssr: false})
 
 type Props = {
   games: Game[];
@@ -12,12 +14,12 @@ type Props = {
 };
 
 export const GamesTable = ({ games = [], canDelete = false }: Props) => {
-  const { mutate: deleteGame, isLoading: isDeleting } = useGameDeletion();
+  const { mutate: deleteGame, isPending: isDeleting } = useGameDeletion();
   const columns = useMemo<Column<Game>[]>(
     () => [
       {
         accessor: 'date',
-        Cell: ({ value }) => Intl.DateTimeFormat([], { dateStyle: 'medium' }).format(new Date(value)),
+        Cell: ({ value }) => <DateRenderer value={value}/>,
       },
       {
         Header: 'Winners',

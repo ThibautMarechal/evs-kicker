@@ -1,5 +1,4 @@
-import { QueryClient } from 'react-query';
-import { dehydrate } from 'react-query/hydration';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { GameForm } from '../components/GameForm';
 import { GamesTable } from '../components/GamesTable';
 import { PlayersTable } from '../components/PlayersTable';
@@ -11,8 +10,8 @@ import { Player } from '../typing';
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['games'], getGames);
-  await queryClient.prefetchQuery(['players'], getPlayers);
+  await queryClient.prefetchQuery({queryKey: ['games'], queryFn: getGames});
+  await queryClient.prefetchQuery({queryKey: ['players'],  queryFn: getPlayers});
   const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
   players.forEach((player) => {
     queryClient.setQueryData(['players', player.id], player);

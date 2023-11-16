@@ -1,8 +1,6 @@
-import { QueryClient } from 'react-query';
-import { broadcastQueryClient } from 'react-query/broadcastQueryClient-experimental';
+import { QueryClient } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
-broadcastQueryClient({ queryClient, broadcastChannel: 'react-query' });
 
 export { queryClient };

@@ -1,42 +1,8 @@
-import { ComponentProps } from 'react';
-import Select from 'react-select';
 import { usePlayers } from '../react-query/players';
 import { Player } from '../typing';
+import dynamic from 'next/dynamic';
 
-const selectStyle: ComponentProps<typeof Select>['styles'] = {
-  menu: (provided) => ({
-    ...provided,
-    zIndex: 100,
-    backgroundColor: 'hsla(var(--b2))',
-  }),
-  option: (provided, props) => ({
-    ...provided,
-    backgroundColor: props.isFocused ? 'hsla(var(--b3))' : 'hsla(var(--b2))',
-    ':active': {
-      backgroundColor: 'hsla(var(--b3))',
-    },
-  }),
-  control: (provided) => ({
-    ...provided,
-    border: 0,
-    backgroundColor: 'hsla(var(--b2))',
-  }),
-  multiValue: (provided) => ({
-    ...provided,
-    color: 'var(--tw-bg-opacity,1)',
-    backgroundColor: 'hsla(var(--b3))',
-  }),
-  multiValueLabel: (provided) => ({
-    ...provided,
-    color: 'unset',
-  }),
-  multiValueRemove: (provided) => ({
-    ...provided,
-    ':hover': {
-      backgroundColor: 'hsla(var(--er))',
-    },
-  }),
-};
+const Select = dynamic(() => import("react-select"), { ssr: false });
 
 type Props = {
   value?: Player[];
@@ -51,15 +17,46 @@ export const PlayerSelect = ({ value, onChange, filterOption = () => true, place
   return (
     <Select
       value={value}
-      // @ts-ignore
-      onChange={onChange}
+      onChange={(v) => onChange?.(v as Array<Player> ?? [])}
       options={options}
-      getOptionValue={(o: Player) => o.id}
-      getOptionLabel={(o: Player) => o.username}
+      getOptionValue={(o) => (o as Player).id}
+      getOptionLabel={(o) => (o as Player).username}
       isMulti
       placeholder={placeholder}
-      // @ts-ignore
-      styles={selectStyle}
+      styles={{
+        menu: (provided) => ({
+          ...provided,
+          zIndex: 100,
+          backgroundColor: 'oklch(var(--b2))',
+        }),
+        option: (provided, props) => ({
+          ...provided,
+          backgroundColor: props.isFocused ? 'oklch(var(--b3))' : 'oklch(var(--b2))',
+          ':active': {
+            backgroundColor: 'oklch(var(--b3))',
+          },
+        }),
+        control: (provided) => ({
+          ...provided,
+          border: 0,
+          backgroundColor: 'oklch(var(--b2))',
+        }),
+        multiValue: (provided) => ({
+          ...provided,
+          color: 'oklch(var(--tw-bg-opacity))',
+          backgroundColor: 'oklch(var(--b3))',
+        }),
+        multiValueLabel: (provided) => ({
+          ...provided,
+          color: 'unset',
+        }),
+        multiValueRemove: (provided) => ({
+          ...provided,
+          ':hover': {
+            backgroundColor: 'oklch(var(--er))',
+          },
+        }),
+      }}
     />
   );
 };

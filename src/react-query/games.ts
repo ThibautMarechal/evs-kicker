@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { useMutation, UseMutationOptions, useQuery, useQueryClient, UseQueryOptions } from 'react-query';
+import { useMutation, UseMutationOptions, useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
 import { Api } from '../axios';
 import { Game, GameIn } from '../typing';
 
@@ -28,8 +28,12 @@ export const useGameDeletion = (mutationOptions?: UseMutationOptions<AxiosRespon
       mutationOptions?.onSuccess?.(response, variables, context);
     },
     onSettled: (response, error, variables, context) => {
-      queryClient.invalidateQueries(['games']);
-      queryClient.invalidateQueries(['players']);
+      queryClient.invalidateQueries({
+        queryKey: ['games']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['players']
+      });
       mutationOptions?.onSettled?.(response, error, variables, context);
     },
     retry: false,
@@ -52,8 +56,12 @@ export const useGameCreation = (mutationOptions?: UseMutationOptions<AxiosRespon
       mutationOptions?.onError?.(error, variables, context);
     },
     onSettled: (response, error, variables, context) => {
-      queryClient.invalidateQueries(['games']);
-      queryClient.invalidateQueries(['players']);
+      queryClient.invalidateQueries({
+        queryKey: ['games']
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['players']
+      });
       mutationOptions?.onSettled?.(response, error, variables, context);
     },
     retry: false,

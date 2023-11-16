@@ -2,14 +2,16 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { PlayersTable } from '../components/PlayersTable';
 import { usePlayerCreation, usePlayers } from '../react-query/players';
-import { QueryClient } from 'react-query';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { getPlayers } from '../firebase/players';
 import { Player } from '../typing';
-import { dehydrate } from 'react-query/hydration';
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['players'], getPlayers);
+  await queryClient.prefetchQuery({
+    queryKey: ['players'],
+    queryFn: getPlayers
+  });
   const players = queryClient.getQueryData<Player[]>(['players']) ?? [];
   players.forEach((player) => {
     queryClient.setQueryData(['players', player.id], player);
@@ -23,7 +25,7 @@ export async function getServerSideProps() {
 
 export default function Home() {
   const { data: players } = usePlayers();
-  const { mutate: createPlayer, isLoading: isCreating } = usePlayerCreation({
+  const { mutate: createPlayer, isPending: isCreating } = usePlayerCreation({
     onSettled: () => {
       setUsername('');
       setEmail('');

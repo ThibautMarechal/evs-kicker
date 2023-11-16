@@ -28,7 +28,7 @@ export async function createPlayer(player: PlayerIn): Promise<void> {
   await addDoc(playersCollection, {
     username: player.username,
     email: player.email,
-    elo: Number.parseInt(process.env.INITIAL_ELO as string),
+    elo: Number.parseInt(process.env.NEXT_PUBLIC_INITIAL_ELO as string),
   });
 }
 

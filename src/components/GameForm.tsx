@@ -5,7 +5,7 @@ import { Player } from '../typing';
 import PlayerSelect from './PlayerSelect';
 
 export const GameForm = () => {
-  const { mutate: createGame, isLoading: isCreating } = useGameCreation({
+  const { mutate: createGame, isPending: isCreating } = useGameCreation({
     onSuccess: () => {
       setWinners([]);
       setLoosers([]);
