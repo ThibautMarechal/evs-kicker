@@ -35,6 +35,10 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         ),
       },
       {
+        id: 'score',
+        accessor: ({ winnersScore, loosersScore}) => `${winnersScore} - ${loosersScore}` 
+      },
+      {
         Header: 'Loosers',
         accessor: 'loosers',
         Cell: ({ value }) => (
@@ -48,8 +52,8 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
         ),
       },
       {
-        Header: 'Delta',
-        accessor: 'delta',
+        Header: 'Elo delta',
+        accessor: 'delta'
       },
       {
         Header: '',

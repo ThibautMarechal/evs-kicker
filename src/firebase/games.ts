@@ -15,6 +15,8 @@ export async function getGames(): Promise<Game[]> {
     loosers: doc.get('loosers'),
     date: doc.get('date').toDate().toISOString(),
     delta: doc.get('delta'),
+    loosersScore: doc.get('loosersScore'),
+    winnersScore: doc.get('winnersScore')
   }));
 }
 
@@ -84,7 +86,9 @@ export async function createGame(game: GameIn): Promise<void> {
   await addDoc(gamesCollection, {
     players: [...game.winners, ...game.loosers],
     winners: game.winners,
+    winnersScore: game.winnersScore,
     loosers: game.loosers,
+    loosersScore: game.loosersScore,
     date: Timestamp.now(),
     delta,
   });
