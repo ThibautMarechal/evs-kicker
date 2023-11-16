@@ -43,11 +43,10 @@ export const useGameDeletion = (mutationOptions?: UseMutationOptions<AxiosRespon
 export const useGameCreation = (mutationOptions?: UseMutationOptions<AxiosResponse<void>, unknown, GameIn>) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ winners, loosers, winnersScore, loosersScore }: GameIn) => {
+    mutationFn: ({ winners, loosers, loosersScore }: GameIn) => {
       return Api.post<void>(`/api/games`, {
         winners,
         loosers,
-        winnersScore,
         loosersScore
       });
     },

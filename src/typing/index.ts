@@ -14,8 +14,7 @@ export type Game = {
   loosers: string[];
   date: string;
   delta: number;
-  winnersScore: number;
   loosersScore: number;
 };
 
-export type GameIn = Pick<Game, 'winners' | 'loosers' | 'winnersScore' | 'loosersScore'>;
+export type GameIn = Pick<Game, 'winners' | 'loosers' | 'loosersScore'>;

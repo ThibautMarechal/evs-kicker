@@ -36,7 +36,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
       },
       {
         id: 'score',
-        accessor: ({ winnersScore, loosersScore}) => `${winnersScore} - ${loosersScore}` 
+        accessor: ({ loosersScore}) => `11 - ${loosersScore}` 
       },
       {
         Header: 'Loosers',
