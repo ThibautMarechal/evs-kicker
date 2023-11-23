@@ -34,6 +34,9 @@ export async function createPlayer(player: PlayerIn): Promise<void> {
   });
 }
 
-export async function updatePlayerElo(playerId: string, elo: number) {
-  await updateDoc(doc(playersCollection, playerId), 'numberOfgames', increment(1), 'elo', elo)
+export async function updatePlayerElo(playerId: string, elo: number, create: boolean) {
+  await updateDoc(doc(playersCollection, playerId), {
+    elo,
+    numberOfGames: increment(create ? 1 : -1)
+  })
 }
