@@ -15,6 +15,8 @@ export const PlayerSelect = ({ value, onChange, filterOption = () => true, place
   const { data: players } = usePlayers();
   const options = players?.filter(filterOption) ?? [];
   return (
+    <div>
+      
     <Select
       value={value}
       onChange={(v) => onChange?.(v as Array<Player> ?? [])}
@@ -57,7 +59,8 @@ export const PlayerSelect = ({ value, onChange, filterOption = () => true, place
           },
         }),
       }}
-    />
+      />
+    </div>
   );
 };
 

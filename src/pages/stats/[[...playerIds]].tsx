@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { usePlayers, usePlayersGames } from '../../react-query/players';
 import { Chart, ChartOptions } from 'react-charts';
-import { Game, Player } from '../../typing';
+import { Player } from '../../typing';
 import PlayerSelect from '../../components/PlayerSelect';
 import { PlayersTable } from '../../components/PlayersTable';
 import { QueryClient,dehydrate } from '@tanstack/react-query';
@@ -58,7 +58,7 @@ export default function Stats() {
       .map(({ data: games }, i) => {
         const gamePoints: GamePoint[] = [];
         let playerElo = players.find((p) => p.id === playerIds[i])?.elo ?? 0;
-        (games as Game[])?.forEach((game) => {
+        for (const game of games ?? []) {
           const gameDate = new Date(game.date);
           gameDate.setUTCHours(0);
           gameDate.setUTCMinutes(0);
@@ -75,11 +75,11 @@ export default function Stats() {
           } else {
             playerElo += game.delta;
           }
-        });
+        }
         if (gamePoints.length) {
-          const theDateBeforeTheFirstMatch = new Date(gamePoints[0].date);
+          const theDateBeforeTheFirstMatch = new Date(gamePoints.at(-1)!.date);
           theDateBeforeTheFirstMatch.setDate(theDateBeforeTheFirstMatch.getDate() - 1);
-          gamePoints.unshift({
+          gamePoints.push({
             date: theDateBeforeTheFirstMatch,
             elo: Number.parseInt(process.env.NEXT_PUBLIC_INITIAL_ELO as string, 10),
           });
@@ -103,8 +103,8 @@ export default function Stats() {
         {
           scaleType: 'linear',
           getValue: (g) => g.elo,
-          min: 500,
-          max: 1500,
+          min: 1000 - 2 * (1000 - Math.min(...gamePointsSeries.map(serie => Math.min(...serie.map(s => s.elo))))),
+          max: 1000 + 2 * (Math.max(...gamePointsSeries.map(serie => Math.max(...serie.map(s => s.elo)))) - 1000),
         },
       ],
     }),

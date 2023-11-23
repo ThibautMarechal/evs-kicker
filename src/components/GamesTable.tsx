@@ -1,6 +1,11 @@
 import { useMemo } from 'react';
 import cn from 'classnames';
-import { Column, useTable } from 'react-table';
+import {
+  useReactTable,
+  getCoreRowModel,
+  createColumnHelper,
+  flexRender,
+} from '@tanstack/react-table';
 import { Game } from '../typing';
 import { PlayerPreview } from '../components/PlayerPreview';
 import { useGameDeletion } from '../react-query/games';
@@ -13,96 +18,93 @@ type Props = {
   canDelete?: boolean;
 };
 
+const gameColumnHerlper = createColumnHelper<Game>();
+
 export const GamesTable = ({ games = [], canDelete = false }: Props) => {
   const { mutate: deleteGame, isPending: isDeleting } = useGameDeletion();
-  const columns = useMemo<Column<Game>[]>(
+  const columns = useMemo(
     () => [
-      {
-        accessor: 'date',
-        Cell: ({ value }) => <DateRenderer value={value}/>,
-      },
-      {
-        Header: 'Winners',
-        accessor: 'winners',
-        Cell: ({ value }) => (
+      gameColumnHerlper.accessor('date', {
+        header: '',
+        cell: ({ getValue}) => <DateRenderer value={getValue()}/>
+      }),
+      gameColumnHerlper.accessor('winners', {
+        header: 'Winners',
+        cell: ({ getValue }) => (
           <>
-            {value.map((playerId) => (
+            {getValue().map((playerId) => (
               <span key={playerId} className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
                 <PlayerPreview id={playerId} />
               </span>
             ))}
           </>
-        ),
-      },
-      {
-        id: 'score',
-        accessor: ({ loosersScore}) => `11 - ${loosersScore}` 
-      },
-      {
-        Header: 'Loosers',
-        accessor: 'loosers',
-        Cell: ({ value }) => (
+        )
+      }),
+      gameColumnHerlper.accessor(({ loosersScore }) => `11 - ${loosersScore}`, {
+        header: 'Score',
+        cell: ({ getValue }) => <span style={{ whiteSpace: 'nowrap'}}>{getValue()}</span>
+      }),
+      gameColumnHerlper.accessor('loosers', {
+        header: 'Loosers',
+        cell: ({ getValue }) => (
           <>
-            {value.map((playerId) => (
+            {getValue().map((playerId) => (
               <span key={playerId} className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
                 <PlayerPreview id={playerId} />
               </span>
             ))}
           </>
-        ),
-      },
-      {
-        Header: 'Elo delta',
-        accessor: 'delta'
-      },
-      {
-        Header: '',
-        accessor: 'id',
-        Cell: ({ value: gameId, row }) =>
-          canDelete && row.index === 0 ? (
-            <button className={cn('btn btn-square btn-xs', { loading: isDeleting })} disabled={isDeleting} type="button" onClick={() => deleteGame(gameId)}>
-              {!isDeleting ? (
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : null}
-            </button>
-          ) : null,
-        width: 50,
-      },
+        )
+      }),
+      gameColumnHerlper.accessor('delta', {
+        header: 'Elo delta'
+      }),
+      gameColumnHerlper.accessor('id', {
+        header: '',
+        cell: ({ row, getValue }) => canDelete && row.index === 0 ? (
+          <button className={cn('btn btn-square btn-xs', { loading: isDeleting })} disabled={isDeleting} type="button" onClick={() => deleteGame(getValue())}>
+            {!isDeleting ? (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : null}
+          </button>
+        ) : null,
+      })
     ],
     [canDelete, deleteGame, isDeleting],
   );
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data: games ?? [],
+
+  const { getHeaderGroups, getRowModel } = useReactTable({
+      columns,
+      data: games,
+      getCoreRowModel: getCoreRowModel(),
   });
   return (
     <>
       <div className="overflow-x-auto">
-        <table className="table w-full table-compact" {...getTableProps()}>
+        <table className="table w-full table-compact">
           <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column, i) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render('Header')}
+            {getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id} colSpan={header.colSpan}>
+                    {flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows?.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="h-12">
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  ))}
-                </tr>
-              );
-            })}
+          <tbody >
+            {getRowModel().rows.map((row) => (
+              <tr key={row.id} className="h-12">
+                {row.getVisibleCells().map(cell => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

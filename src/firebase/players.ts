@@ -1,16 +1,17 @@
-import { getDoc, getDocs, query, collection, orderBy, doc, addDoc, updateDoc } from '@firebase/firestore';
+import { getDoc, getDocs, query, collection, orderBy, doc, addDoc, updateDoc, increment } from '@firebase/firestore';
 import { firestore } from '.';
 import { Player, PlayerIn } from '../typing';
 
 const playersCollection = collection(firestore, process.env.NODE_ENV === 'development' ? 'players' : 'players');
 
 export async function getPlayers(): Promise<Player[]> {
-  const q = await getDocs(query(playersCollection, orderBy('elo', 'desc')));
+  const q = await getDocs(query(playersCollection, orderBy('elo', 'desc'), orderBy('numberOfGames', 'desc')));
   return q.docs.map((doc) => ({
     id: doc.id,
     username: doc.get('username'),
     email: doc.get('email'),
     elo: doc.get('elo'),
+    numberOfGames: doc.get('numberOfGames')
   }));
 }
 
@@ -21,6 +22,7 @@ export async function getPlayer(id: string): Promise<Player> {
     username: playerDoc.get('username'),
     email: playerDoc.get('email'),
     elo: playerDoc.get('elo'),
+    numberOfGames: playerDoc.get('numberOfGames')
   };
 }
 
@@ -33,5 +35,5 @@ export async function createPlayer(player: PlayerIn): Promise<void> {
 }
 
 export async function updatePlayerElo(playerId: string, elo: number) {
-  await updateDoc(doc(playersCollection, playerId), { elo });
+  await updateDoc(doc(playersCollection, playerId), 'numberOfgames', increment(1), 'elo', elo)
 }

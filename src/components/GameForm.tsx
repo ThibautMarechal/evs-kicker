@@ -20,7 +20,7 @@ export const GameForm = () => {
       <PlayerSelect value={winners} onChange={(v) => setWinners(v as Player[])} filterOption={(p) => !loosers.includes(p)} placeholder="Winners" />
       <PlayerSelect value={loosers} onChange={(v) => setLoosers(v as Player[])} filterOption={(p) => !winners.includes(p)} placeholder="Loosers" />
       <div />
-      <input type="number" className='input input-sm input-bordered w-full' value={11}  />
+      <input type="number" className='input input-sm input-bordered w-full' defaultValue={11} disabled />
       <input type="number" className='input input-sm input-bordered w-full' min={0} max={10} value={loosersScore} onChange={(e) => setLoosersScore(Number.parseInt(e.currentTarget.value ?? '0'))}/>
       <button
         disabled={!winners.length || !loosers.length || isCreating}

@@ -3,6 +3,7 @@ export type Player = {
   username: string;
   email: string;
   elo: number;
+  numberOfGames: number;
 };
 
 export type PlayerIn = Pick<Player, 'username' | 'email'>;
