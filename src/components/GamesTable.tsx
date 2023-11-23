@@ -34,7 +34,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
           <>
             {getValue().map((playerId) => (
               <span key={playerId} className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
-                <PlayerPreview id={playerId} />
+                <PlayerPreview id={playerId} linkable />
               </span>
             ))}
           </>
@@ -50,7 +50,7 @@ export const GamesTable = ({ games = [], canDelete = false }: Props) => {
           <>
             {getValue().map((playerId) => (
               <span key={playerId} className="block md:inline mx-2 text-xs md:text-sm lg:text-base">
-                <PlayerPreview id={playerId} />
+                <PlayerPreview id={playerId} linkable />
               </span>
             ))}
           </>

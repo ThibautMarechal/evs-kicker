@@ -62,7 +62,7 @@ export default function Home() {
         </div>
       </form>
       <div className="md:col-span-2">
-        <PlayersTable players={players ?? []} />
+        <PlayersTable players={players ?? []} emoji />
       </div>
     </div>
   );

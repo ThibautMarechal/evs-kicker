@@ -33,7 +33,7 @@ export default function Home() {
         <GamesTable games={games ?? []} canDelete />
       </div>
       <div>
-        <PlayersTable players={players ?? []} />
+        <PlayersTable players={players ?? []} emoji />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { useMutation, UseMutationOptions, useQueries, useQuery, useQueryClient, 
 import { Api } from '../axios';
 import { Game, Player, PlayerIn } from '../typing';
 
-export const usePlayers = (queryOptions?: UseQueryOptions<Player[]>) => {
+export const usePlayers = (queryOptions?: Omit<UseQueryOptions<Player[]>, 'queryKey' | 'queryFn'>) => {
   return useQuery({
     queryKey: ['players'],
     queryFn: () => Api.get<Player[]>('/api/players').then((r) => r.data),

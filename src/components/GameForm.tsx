@@ -17,8 +17,8 @@ export const GameForm = () => {
   const [loosersScore, setLoosersScore] = useState(0);
   return (
     <>
-      <PlayerSelect value={winners} onChange={(v) => setWinners(v as Player[])} filterOption={(p) => !loosers.includes(p)} placeholder="Winners" />
-      <PlayerSelect value={loosers} onChange={(v) => setLoosers(v as Player[])} filterOption={(p) => !winners.includes(p)} placeholder="Loosers" />
+      <PlayerSelect value={winners} onChange={(v) => setWinners(v as Player[])} filterOption={(p) => !loosers.includes(p)} placeholder="Winners" maxSelection={2} />
+      <PlayerSelect value={loosers} onChange={(v) => setLoosers(v as Player[])} filterOption={(p) => !winners.includes(p)} placeholder="Loosers" maxSelection={2} sortByEloDescending={false} />
       <div />
       <input type="number" className='input input-sm input-bordered w-full' defaultValue={11} disabled />
       <input type="number" className='input input-sm input-bordered w-full' min={0} max={10} value={loosersScore} onChange={(e) => setLoosersScore(Number.parseInt(e.currentTarget.value ?? '0'))}/>
@@ -28,7 +28,7 @@ export const GameForm = () => {
         type="button"
         onClick={() => createGame({ winners: winners.map((w) => w.id), loosers: loosers.map((l) => l.id), loosersScore })}
       >
-        New Game
+        Create new game
       </button>
     </>
   );

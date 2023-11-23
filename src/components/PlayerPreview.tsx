@@ -6,9 +6,10 @@ import { Player } from '../typing';
 type Props = {
   id: string;
   player?: Player;
+  linkable?: boolean
 };
 
-export const PlayerPreview = ({ id, player: initialPlayer }: Props) => {
+export const PlayerPreview = ({ id, player: initialPlayer, linkable }: Props) => {
   const { data: player } = usePlayer(id, { initialData: initialPlayer, enabled: !!initialPlayer });
   return player ? (
     <div className="inline-flex items-center space-x-3">
@@ -19,7 +20,9 @@ export const PlayerPreview = ({ id, player: initialPlayer }: Props) => {
       </div>
       <div>
         <div className="font-bold">
-          <Link href={`/stats/${id}`}>{player?.username}</Link>
+          {linkable ? (
+            <Link href={`/stats/${id}`}>{player?.username}</Link>
+          ) : player?.username}
         </div>
       </div>
     </div>

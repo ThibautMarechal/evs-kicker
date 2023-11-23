@@ -1,26 +1,28 @@
 import { useMemo } from 'react';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { Player } from '../typing';
 import { PlayerPreview } from './PlayerPreview';
 import { flexRender } from '@tanstack/react-table';
 
 type Props = {
   players: Player[];
+  emoji?: boolean
 };
 
 const playerColumnHerlper = createColumnHelper<Player>();
 
-export const PlayersTable = ({ players = [] }: Props) => {
+export const PlayersTable = ({ players = [], emoji }: Props) => {
   const columns = useMemo(
     () => [
+      emoji ?
       playerColumnHerlper.display({
         id: 'emoji',
         size: 10,
         cell: ({ row }) => row.index === 0 ? '👑' : players.length - 1 === row.index ? '💩' : '',
-      }),
+      }) : null,
       playerColumnHerlper.display({
         id: 'gravatar',
-        cell: ({ row }) => <PlayerPreview id={row.original.id} player={row.original} />,
+        cell: ({ row }) => <PlayerPreview id={row.original.id} player={row.original} linkable />,
       }),
       playerColumnHerlper.accessor('elo',{
         header: 'Elo',
@@ -28,7 +30,7 @@ export const PlayersTable = ({ players = [] }: Props) => {
       playerColumnHerlper.accessor('numberOfGames',{
         header: 'Games',
       }),
-    ],
+    ].filter(Boolean) as Array<ColumnDef<Player, any>>,
     [],
   );
   const { getHeaderGroups, getRowModel } = useReactTable({
