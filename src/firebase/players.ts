@@ -31,6 +31,7 @@ export async function createPlayer(player: PlayerIn): Promise<void> {
     username: player.username,
     email: player.email,
     elo: Number.parseInt(process.env.NEXT_PUBLIC_INITIAL_ELO as string),
+    numberOfGames: 0
   });
 }
 
