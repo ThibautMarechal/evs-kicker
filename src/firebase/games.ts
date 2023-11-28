@@ -42,8 +42,8 @@ export async function deleteGame(id: string): Promise<void> {
     looserPlayers.push(await getPlayer(looser));
   }
   await Promise.all([
-    ...winnerPlayers.map((winner) => updatePlayerElo(winner.id, winner.elo - deletedDelta, false)),
-    ...looserPlayers.map((looser) => updatePlayerElo(looser.id, looser.elo + deletedDelta, false)),
+    ...winnerPlayers.map((winner) => updatePlayerElo(winner.id, winner.elo - deletedDelta, true, true)),
+    ...looserPlayers.map((looser) => updatePlayerElo(looser.id, looser.elo + deletedDelta, false, true)),
   ]);
   await deleteDoc(doc(gamesCollection, id));
 }
@@ -78,8 +78,8 @@ export async function createGame(game: GameIn): Promise<void> {
   const delta = Math.round((playerRating - winnerAverage) * (1 - ((game.loosersScore - 5)/10)));
 
   await Promise.all([
-    ...winnerPlayers.map((winner) => updatePlayerElo(winner.id, winner.elo + delta, true)),
-    ...looserPlayers.map((looser) => updatePlayerElo(looser.id, looser.elo - delta, true)),
+    ...winnerPlayers.map((winner) => updatePlayerElo(winner.id, winner.elo + delta, true, false)),
+    ...looserPlayers.map((looser) => updatePlayerElo(looser.id, looser.elo - delta, false, false)),
   ]);
 
   await addDoc(gamesCollection, {
