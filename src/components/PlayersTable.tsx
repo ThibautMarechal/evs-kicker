@@ -9,6 +9,19 @@ type Props = {
   emoji?: boolean
 };
 
+function getWinRatio(player: Player){
+  if(player.numberOfGames === 0){
+    return 0;
+  }
+  return (player.wins / player.numberOfGames * 100)
+}
+function getLooseRatio(player: Player){
+  if(player.numberOfGames === 0){
+    return 0;
+  }
+  return 100 - getWinRatio(player);
+}
+
 const playerColumnHerlper = createColumnHelper<Player>();
 
 export const PlayersTable = ({ players = [], emoji }: Props) => {
@@ -27,8 +40,10 @@ export const PlayersTable = ({ players = [], emoji }: Props) => {
       playerColumnHerlper.accessor('elo',{
         header: 'Elo',
       }),
-      playerColumnHerlper.accessor('numberOfGames',{
+      playerColumnHerlper.display({
+        id: 'games',
         header: 'Games',
+        cell: ({ row: { original } }) => <span style={{ cursor: 'help' }} title={`Wins    : ${String(original.wins).padStart(3, ' ')} | ${(getWinRatio(original)).toFixed(0)} %\nLooses : ${String(original.looses).padStart(3, ' ')} | ${(getLooseRatio(original)).toFixed(0)} %`}>{original.numberOfGames}</span> 
       }),
     ].filter(Boolean) as Array<ColumnDef<Player, any>>,
     [],
