@@ -87,28 +87,25 @@ export default function Stats() {
       .filter((gps) => gps.length);
   }, [playerIds, players, queries]);
 
-  const options = useMemo<ChartOptions<GamePoint>>(
-    () => ({
-      data: gamePointsSeries.map((gps, i) => ({
-        label: players?.find((p) => p.id === playerIds[i])?.username,
-        data: gps,
-      })),
-      primaryAxis: {
-        scaleType: 'time',
-        getValue: (g) => g.date,
+  const options: ChartOptions<GamePoint> = {
+    data: gamePointsSeries.map((gps, i) => ({
+      label: players?.find((p) => p.id === playerIds[i])?.username,
+      data: gps,
+    })),
+    primaryAxis: {
+      scaleType: 'time',
+      getValue: (g) => g.date,
+    },
+    secondaryAxes: [
+      {
+        scaleType: 'linear',
+        getValue: (g) => g.elo,
+        min: 1000 - 2 * (1000 - Math.min(...gamePointsSeries.map(serie => Math.min(...serie.map(s => s.elo))))),
+        max: 1000 + 2 * (Math.max(...gamePointsSeries.map(serie => Math.max(...serie.map(s => s.elo)))) - 1000),
       },
-      secondaryAxes: [
-        {
-          scaleType: 'linear',
-          getValue: (g) => g.elo,
-          min: 1000 - 2 * (1000 - Math.min(...gamePointsSeries.map(serie => Math.min(...serie.map(s => s.elo))))),
-          max: 1000 + 2 * (Math.max(...gamePointsSeries.map(serie => Math.max(...serie.map(s => s.elo)))) - 1000),
-        },
-      ],
-    }),
-    [gamePointsSeries, playerIds, players],
-  );
-
+    ],
+    dark: (typeof window !== 'undefined') ? window.matchMedia('(prefers-color-scheme: dark)').matches : false
+  }
   return (
     <div className="md:grid md:grid-cols-3 md:gap-4 p-4 h-full flex flex-col">
       <div>
@@ -119,7 +116,8 @@ export default function Stats() {
         ) : null}
       </div>
       <div className="md:col-span-2 max-h-screen">
-        {players && playerIds.length && queries.some((q) => q.data) ? <>{gamePointsSeries.length ? <Chart options={options} /> : <p>No match found</p>}</> : null}
+        {players && playerIds.length && queries.some((q) => q.data) ? <>{gamePointsSeries.length ? <Chart options={options} style={{
+        }} /> : <p>No match found</p>}</> : null}
       </div>
     </div>
   );
