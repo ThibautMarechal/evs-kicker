@@ -4,6 +4,7 @@ import { Player } from '../typing';
 import dynamic from 'next/dynamic';
 import { components } from 'react-select';
 import { PlayerPreview } from './PlayerPreview';
+import { ComponentProps } from 'react';
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
@@ -14,11 +15,11 @@ type Props = {
   placeholder?: string;
   sortByEloDescending?: boolean
   maxSelection?: number
+  menuPortalTarget?: ComponentProps<typeof Select>['menuPortalTarget']
 };
 
 
-
-export const PlayerSelect = ({ value, onChange, filterOption = () => true, placeholder = 'Players', sortByEloDescending = true, maxSelection }: Props) => {
+export const PlayerSelect = ({ value, onChange, filterOption = () => true, placeholder = 'Players', sortByEloDescending = true, maxSelection, menuPortalTarget }: Props) => {
   const { data: players } = usePlayers({
     select: (players) => {
       if(sortByEloDescending){
@@ -49,6 +50,7 @@ export const PlayerSelect = ({ value, onChange, filterOption = () => true, place
         getOptionLabel={(o) => (o as Player).username}
         isMulti
         placeholder={placeholder}
+        menuPortalTarget={menuPortalTarget}
         components={{
           Option: (props) => (
             <components.Option {...props}>

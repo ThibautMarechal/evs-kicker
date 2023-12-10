@@ -60,6 +60,10 @@ export async function createGame(game: GameIn): Promise<void> {
     }
   }
 
+  if(game.loosersScore < 0 || game.loosersScore > 10){
+    throw new Error('422');
+  }
+
   const winnerPlayers: Player[] = [];
   for (const winner of game.winners) {
     winnerPlayers.push(await getPlayer(winner));
