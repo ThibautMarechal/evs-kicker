@@ -2,7 +2,7 @@ import { collection, query, getDocs, orderBy, limit, doc, deleteDoc, addDoc, Tim
 import { firestore } from '.';
 import { Game, GameIn, Player } from '../typing';
 import { getPlayer, updatePlayerElo } from './players';
-import EloRating from 'elo-rating';
+import { calculateEloDelta } from '../utils/elo';
 
 const gamesCollection = collection(firestore, process.env.NODE_ENV === 'development' ? 'games' : 'games');
 
@@ -69,13 +69,8 @@ export async function createGame(game: GameIn): Promise<void> {
   for (const looser of game.loosers) {
     looserPlayers.push(await getPlayer(looser));
   }
-
-  const winnerAverage = winnerPlayers.reduce((acc, winner) => acc + winner.elo, 0) / winnerPlayers.length;
-  const looserAverage = looserPlayers.reduce((acc, looser) => acc + looser.elo, 0) / looserPlayers.length;
-
-  const { playerRating } = EloRating.calculate(winnerAverage, looserAverage, true);
-
-  const delta = Math.round((playerRating - winnerAverage) * (1 - ((game.loosersScore - 5)/10)));
+  
+  const delta = calculateEloDelta(winnerPlayers.map(w => w.elo), looserPlayers.map(l => l.elo), game.loosersScore)
 
   await Promise.all([
     ...winnerPlayers.map((winner) => updatePlayerElo(winner.id, winner.elo + delta, true, false)),
