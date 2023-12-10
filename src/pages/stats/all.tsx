@@ -81,6 +81,17 @@ export default function Stats() {
             date: theDateBeforeTheFirstMatch,
             elo: Number.parseInt(process.env.NEXT_PUBLIC_INITIAL_ELO as string, 10),
           });
+          if(!sameDay(gamePoints[0].date, new Date())) {
+            const todayAdjusted = new Date();
+            todayAdjusted.setUTCHours(0);
+            todayAdjusted.setUTCMinutes(0);
+            todayAdjusted.setUTCSeconds(0);
+            todayAdjusted.setUTCMilliseconds(0);
+            gamePoints.unshift({
+              date: todayAdjusted,
+              elo: gamePoints[0].elo
+            })
+          }
         }
         return gamePoints;
       })
