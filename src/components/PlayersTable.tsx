@@ -31,7 +31,7 @@ export const PlayersTable = ({ players = [], emoji }: Props) => {
       playerColumnHerlper.display({
         id: 'emoji',
         size: 10,
-        cell: ({ row }) => row.index === 0 ? '👑' : players.length - 1 === row.index ? '💩' : '',
+        cell: ({ row }) => row.index === 0 ? '🥇': row.index === 1 ? '🥈': row.index === 2 ? '🥉' :players.length - 1 === row.index ? '💩' : '',
       }) : null,
       playerColumnHerlper.display({
         id: 'gravatar',

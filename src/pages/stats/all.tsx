@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { usePlayers, usePlayersGames } from '../../react-query/players';
 import { Chart, ChartOptions } from 'react-charts';
+import { curveLinear} from 'd3-shape';
 import { Player } from '../../typing';
 import { PlayersTable } from '../../components/PlayersTable';
 import { QueryClient,dehydrate } from '@tanstack/react-query';
@@ -113,6 +113,7 @@ export default function Stats() {
         getValue: (g) => g.elo,
         min: 1000 - 2 * (1000 - Math.min(...gamePointsSeries.map(serie => Math.min(...serie.map(s => s.elo))))),
         max: 1000 + 2 * (Math.max(...gamePointsSeries.map(serie => Math.max(...serie.map(s => s.elo)))) - 1000),
+        curve: curveLinear
       },
     ],
     dark: (typeof window !== 'undefined') ? window.matchMedia('(prefers-color-scheme: dark)').matches : false
