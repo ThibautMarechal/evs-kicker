@@ -9,6 +9,7 @@ import { GetServerSidePropsContext } from 'next';
 import { getPlayers } from '../../firebase/players';
 import { getPlayerGames } from '../../firebase/games';
 import EloChart from '../../components/Chart';
+import Link from 'next/link';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (context.req.url?.startsWith('/_next/data')) {
@@ -42,6 +43,7 @@ export default function Stats() {
   return (
     <div className="md:grid md:grid-cols-3 md:gap-4 p-4 h-full flex flex-col">
       <div>
+        <Link href="/stats/all" className='m-2'>Go to all players stats ➡️</Link>
         <PlayerSelect
           value={(playerIds.map((id) => players?.find((p) => p.id === id))?.filter(Boolean) ?? []) as Player[]}
           onChange={(newPlayers) => (newPlayers ? push(`/stats/${newPlayers.map((p) => p.id).join('/')}`) : push('/stats/'))}
@@ -53,7 +55,7 @@ export default function Stats() {
         ) : null}
       </div>
       <div className="md:col-span-2 h-full">
-        {players && playerIds.length && <EloChart playerIds={playerIds}/>}
+        {players && playerIds.length ? <EloChart playerIds={playerIds}/> : null}
       </div>
     </div>
   );

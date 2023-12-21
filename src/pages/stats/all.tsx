@@ -47,7 +47,7 @@ export default function Stats() {
         ) : null}
       </div>
       <div className="md:col-span-2 max-h-screen">
-        {players && playerIds.length && <EloChart playerIds={playerIds}/>}
+        {players && playerIds.length ? <EloChart playerIds={playerIds}/> : null}
       </div>
     </div>
   );
