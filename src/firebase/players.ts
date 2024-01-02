@@ -5,7 +5,7 @@ import { Player, PlayerIn } from '../typing';
 const playersCollection = collection(firestore, process.env.NODE_ENV === 'development' ? 'players' : 'players');
 
 export async function getPlayers(): Promise<Player[]> {
-  const q = await getDocs(query(playersCollection, orderBy('elo', 'desc'), orderBy('numberOfGames', 'desc')));
+  const q = await getDocs(query(playersCollection, orderBy('elo', 'desc'), orderBy('numberOfGames', 'desc'), orderBy('username', 'asc')));
   return q.docs.map((doc) => ({
     id: doc.id,
     username: doc.get('username'),
