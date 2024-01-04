@@ -38,10 +38,10 @@ export default function Home() {
           <GamesTable games={games ?? []} canDelete />
         </div>
         <div>
-          <PlayersTable players={players ?? []} emoji />
+          <PlayersTable players={players?.filter(p => p.numberOfGames > 0) ?? []} emoji />
         </div>
       </div>
-      <dialog ref={GameFormDialogRef} className='modal'>
+      <dialog ref={GameFormDialogRef} className='modal items-start mt-4'>
         <div className="modal-box grid gap-4">
           <h3>Create a new Game</h3>
           <form method="dialog">

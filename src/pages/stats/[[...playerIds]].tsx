@@ -43,7 +43,9 @@ export default function Stats() {
   return (
     <div className="md:grid md:grid-cols-3 md:gap-4 p-4 h-full flex flex-col">
       <div>
-        <Link href="/stats/all" className='m-2'>Go to all players stats ➡️</Link>
+        <div className="py-2">
+          <Link href="/stats/all">Go to all players stats ➡️</Link>
+        </div>
         <PlayerSelect
           value={(playerIds.map((id) => players?.find((p) => p.id === id))?.filter(Boolean) ?? []) as Player[]}
           onChange={(newPlayers) => (newPlayers ? push(`/stats/${newPlayers.map((p) => p.id).join('/')}`) : push('/stats/'))}
