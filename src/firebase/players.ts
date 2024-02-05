@@ -31,6 +31,9 @@ export async function getPlayer(id: string): Promise<Player> {
 }
 
 export async function createPlayer(player: PlayerIn): Promise<void> {
+  if((await getPlayers()).find(p => p.username === player.username)) {
+    throw new Error('Username already exist')
+  }
   await addDoc(playersCollection, {
     username: player.username,
     email: player.email,
