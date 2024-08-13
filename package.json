@@ -12,7 +12,7 @@
   "dependencies": {
     "@tanstack/react-query": "5.12.2",
     "@tanstack/react-table": "^8.10.7",
-    "axios": "1.6.2",
+    "axios": "1.7.4",
     "classnames": "2.3.1",
     "daisyui": "4.4.17",
     "elo-rating": "1.0.1",
